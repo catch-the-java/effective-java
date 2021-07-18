@@ -72,9 +72,12 @@ NutritionFacts cocaCola = new NutritionFacts.Builder(240, 8)
 
 	-	https://github.com/greekZorba/java-design-patterns/tree/master/builder
 
-### Lombok을 이용하여 builder 구현
+[실습] Lombok을 이용하여 builder 구현
+-------------------------------------
 
-앞서 builder를 모두 구하면 힘드니 Lombok라이브러리의 @Builder어노테이션을 활용하자. - builder패턴 적용 클래스
+앞서 builder를 모두 구하면 힘드니 Lombok라이브러리의 @Builder어노테이션을 활용하자.
+
+-	builder패턴 적용 클래스
 
 ```java
 @Entity
@@ -136,8 +139,8 @@ public class RefundTest {
 }
 ```
 
--	필수 매개변수가 없을 경우 예외처리를 설정할 수 있다.
--	builder 이름으로 책임을 부여하자.
+-	**필수 매개변수가 없을 경우 예외처리를 설정**할 수 있다.
+-	**builder 이름으로 책임을 부여하자.**
 	-	예를들어, 주문에 대한 환불이 있을경우 신용카드 취소, 계좌 기반 환불이 있다.
 	-	각각 받아야할 정보들이 다른데 하나의 builder로 검증하기 힘들다.
 	-	이런경우 builder의 이름을 명확하게 해서 책임을 부여하자.
