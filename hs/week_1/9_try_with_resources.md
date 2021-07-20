@@ -8,6 +8,25 @@
 
 ## try-finally
 
+```java
+static void copy(String src, String dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        try {
+            OutputStream out = new FileOutputStream(dst);
+            try {
+                byte[] buf = new byte[BUFFER_SIZE];
+                int n;
+                while ((n = in.read(buf)) >= 0)
+                    out.write(buf, 0, n);
+            } finally {
+                out.close();
+            }
+        } finally {
+            in.close();
+        }
+    }
+```
+
 - 전통적으로 자원이 제대로 닫힘을 보장하는 수단으로 사용
 - __문제점__
   - 자원이 둘 이상이면 tryp-finally 방식은 너무 지저분하다.
