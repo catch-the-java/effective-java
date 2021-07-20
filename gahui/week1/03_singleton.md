@@ -45,7 +45,7 @@ Supplier<Elvis2> elvis2Supplier = Elvis2::getInstance;
 
 ## 방법3. 열거타입 선언
 - 간결, 추가 노력없이 직렬화 가능
-  - *** QQ. 직렬화가 되면 좋은점? ***
+  - **QQ. 직렬화가 되면 좋은점?**
 - 대부분의 상황에서 원소가 하나뿐인 열거 타입이 싱글턴을 만드는 가장 좋은 방법
 ```java
 enum Elvis3 {
