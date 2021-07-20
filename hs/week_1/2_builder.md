@@ -13,6 +13,8 @@
 	-	만약 사용자가 설정하길 원치 않는 매개변수까지 포함되어 있어도 어쩔수없이 값을 설정해줘야함.
 	-	등등
 
+<br/>
+
 해결책 2. 자바빈즈 패턴(JavaBeans pattern)
 ------------------------------------------
 
@@ -35,6 +37,8 @@ cocaCola.setSodium(35);
 	-	getter, setter가 있어서 불변 클래스를 만들지 못함.
 	-	(쓰레드 간에 공유 가능한 상태가 있으니까) 스레드 안정성 얻으려면 추가적인 수고(locking)필요하다.
 
+<br/>
+
 해결책 3. 빌더 패턴 (Builder pattern)
 -------------------------------------
 
@@ -44,12 +48,14 @@ NutritionFacts cocaCola = new NutritionFacts.Builder(240, 8)
 .calories(100).sodium(35).carbohydrate(27).build();
 ```
 - 특징
+	- 인자 순서 상관없다.
+	- 인자 많을수록 안전하게 객체 생성가
 	-	빌더패턴은 유효성 확인 할수 있다.
 
 		-	(최대한 일찍 발견하려면) 각 빌더 생성자와 메서드에서 수행
 		-	build 메서드가 호출하는 생성자에서 여러 매개변수에 걸친 불변식 검사.
 
-	-	빌더 패턴은 계층적으로 설계된 클래스와 함께 쓰기 좋다.
+	-	(?) 빌더 패턴은 계층적으로 설계된 클래스와 함께 쓰기 좋다.
 
 	-	상당히 유연하다.
 
@@ -64,6 +70,8 @@ NutritionFacts cocaCola = new NutritionFacts.Builder(240, 8)
 -	예제코드 참조
 
 	-	https://github.com/greekZorba/java-design-patterns/tree/master/builder
+
+<br/>
 
 [실습] Lombok을 이용하여 builder 구현
 -------------------------------------
