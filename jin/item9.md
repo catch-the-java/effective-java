@@ -1,4 +1,4 @@
-# try-finally 보다는 try-with-resourse를 사용하라.
+# Item9 try-finally 보다는 try-with-resourse를 사용하라.
 
 ## try-finally
 
