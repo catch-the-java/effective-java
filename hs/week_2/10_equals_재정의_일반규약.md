@@ -70,7 +70,6 @@ public boolean equals(Object o) {
 - 조건
   - x.equals(y)가 true, y.equals(z)가 true면 x.equals(z)도 true (null 아닌 모든 x,y)
 
-#### __문제 코드 #1 (추이성 위배)__
 ```java
 public class Point {
     private final int x;
@@ -79,8 +78,29 @@ public class Point {
       // 구현 생략
     }
     // 나머지 코드 생략
-}
+  }
 ```
+
+#### __문제 코드 #1 (대칭성 위배)__
+```java
+public class ColorPoint extends Point {
+    private final Color color;
+    @Override public boolean equals(Object o) {
+      if (!(o instanceof ColorPoint))
+          return false;
+      return super.equals(o) && ((ColorPoint) o).color == color;
+    }
+    // 나머지 코드 생략
+  }
+```
+```java
+Point p = new Point(1, 2);
+ColorPoint cp = new ColorPoint(1, 2, Color.RED);
+```
+- p.equals(cp)는 true, cp.equals(p)는 false이므로 대칭성 위배한다.
+
+#### __문제 코드 #2 (추이성 위배)__
+
 ```java
 public class ColorPoint extends Point {
     private final Color color;
@@ -106,7 +126,7 @@ public class ColorPoint extends Point {
   - 대칭성은 만족하지만 __추이성에 위배된다.__
     - p1.equals(p2), p2.equals(p3)는 true인데 p1.eqauls(p3)는 false
   - <u>구체 클래스를 확장해 새로운 값을 추가하면서 equals 규약을 만족시킬 방법은 존재하지 않는다.</u>
-#### __문제 코드 #2 (리스코프 치환 원칙 위배)__
+#### __문제 코드 #3 (리스코프 치환 원칙 위배)__
   - 그렇다면 equals는 같은 구현 클래스의 객체와 비교할 때만 true 반환하게 변경하면?
     - getClass 메서드 사용
   ```java
@@ -180,7 +200,7 @@ public class ColorPoint extends Point {
 
 ## equals 올바른 구현 방법
 
-- 구현단계
+- __구현단계__
   1. == 연산자를 사용해 입력이 자기 참조인지 확인한다.
       - 자기 자신이면 true -> 성능최적화용도
   2. instanceof 연산자로 입력이 올바른 타입인지 확인. 그렇지 않으면 false 반환.
@@ -194,7 +214,10 @@ public class ColorPoint extends Point {
       - null도 정상값으로 취급해야하면 Object.equals()로 비교
         - NullPointerException 방지
       - 아주 복잡한 필드를 가진 클래스는 필드의 표준형(canonical form)을 저장해둔 후 표준형끼리 비교하면 훨씬 경제적
-- 어떤 필드를 먼저 비교하느냐가 equals의 성능을 좌우한다.
+
+<br/>
+
+- __어떤 필드를 먼저 비교하느냐가 equals의 성능을 좌우한다.__
   - 비교하는 비용이 싼 필드 먼저 비교
   - 객체의 논리적 상태와 관련 없는 필드는 비교하면 안된다.
     - ex) 동기화용 lock 필드

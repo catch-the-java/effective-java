@@ -29,7 +29,7 @@ static void copy(String src, String dst) throws IOException {
 
 - 전통적으로 자원이 제대로 닫힘을 보장하는 수단으로 사용
 - __문제점__
-  - 자원이 둘 이상이면 tryp-finally 방식은 너무 지저분하다.
+  - 코드가 너무 지저분하다. (특히 자원 둘이상이면..)
   - close 메서드 호출을 잊어버릴 수 있다.
   - 예외는 try블록, finally 블록 모두에서 발생
     - close 메서드 호출 실패할 수 있다.
