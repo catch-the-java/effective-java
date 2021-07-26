@@ -1,8 +1,8 @@
 > ## 모든 객체의 공통 메서드
-> Object에서 final이 아닌 메서드(equals, hashCode, toString, clone, finalize)는
-> 모두 재정의(overriding)을 염두해 두고 설계된 것이라 재정의시 지켜야할 일반 규약이 있다.
-> __즉 모든 클래스는 이 메서드들을 일반 규약에 맞게 재정의 해야한다.__
-> 잘못 정의하면 오동작하게 될 수 도있음.(HashMap, HashSet ...)
+> Object에서 final이 아닌 메서드(equals, hashCode, toString, clone, finalize)는  
+> 모두 재정의(overriding)을 염두해 두고 설계된 것이라 재정의시 지켜야할 일반 규약이 있다.  
+> __즉 모든 클래스는 이 메서드들을 일반 규약에 맞게 재정의 해야한다.__  
+> 잘못 정의하면 오동작하게 될 수 도있음.(HashMap, HashSet ...)  
 
 <br/>
 
@@ -12,9 +12,9 @@
   1. 각 인스턴스가 본질적으로 고유한 경우.
       - ex) enum(아이템 34), 값이 같은 인스턴스가 둘 이상 만들어지지 않음을 보장하는 인스턴스 통제 클래스(아이템1)
         - 논리적 동치성 == 물리적인 객체 식별성 같은 의미가 됨
-  2. 인스턴스의 '논리적 동치성(logical equality)'을 검사할 일이 없는 경우.
-  3. 상위 클래스에서 재정의한 equal가 하위 클래스에도 딱 들어 맞는 경우.
-  4. 클래스가 private이거나 package-private이고 equals 메서드를 호출할 일이 없는 경우.
+  2. 인스턴스의 '논리적 동치성(logical equality)'을 검사할 일이 없는 경우
+  3. 상위 클래스에서 재정의한 equal가 하위 클래스에도 딱 들어 맞는 경우
+  4. 클래스가 private이거나 package-private이고 equals 메서드를 호출할 일이 없는 경우
 
 <br/>
 
@@ -125,7 +125,7 @@ public class ColorPoint extends Point {
   ```
   - 대칭성은 만족하지만 __추이성에 위배된다.__
     - p1.equals(p2), p2.equals(p3)는 true인데 p1.eqauls(p3)는 false
-  - <u>구체 클래스를 확장해 새로운 값을 추가하면서 equals 규약을 만족시킬 방법은 존재하지 않는다.</u>
+  - __구체 클래스를 확장해 새로운 값을 추가하면서 equals 규약을 만족시킬 방법은 존재하지 않는다.__
 #### __문제 코드 #3 (리스코프 치환 원칙 위배)__
   - 그렇다면 equals는 같은 구현 클래스의 객체와 비교할 때만 true 반환하게 변경하면?
     - getClass 메서드 사용
@@ -138,14 +138,14 @@ public class ColorPoint extends Point {
         return p.x == x && p.y == y;
     }
   ```
-  - <u>하지만 리스코프 치환 원칙에 위배</u>
+  - __하지만 리스코프 치환 원칙에 위배__
     - Point의 하위 클래스는 정의상 여전히 Point이므로 어디서든 Point로써 활용될 수 있어야한다.
 > - 리스토프 치환 원칙이란?
 >   - 어떤 타입에 있어 중요한 속성이라면 그 하위 타입에서도 마찬가지로 중요하다.  
 >   - 따라서 그 타입의 모든 메서드가 하위 타입에서도 똑같이 잘 작동해야한다.  
 
 #### 우회 방법
-  - <u>__상속대신 컴포지션을 사용하자 (아이템 18)__</u>
+  - __상속대신 컴포지션을 사용하자 (아이템 18)__
     - Point 상속대신 private 필드
     - ColorPoint와 같은 위치의 일반 Poinst를 반환하는 view메서드(아이템 6) 추가
   ```java
@@ -222,3 +222,8 @@ public class ColorPoint extends Point {
   - 객체의 논리적 상태와 관련 없는 필드는 비교하면 안된다.
     - ex) 동기화용 lock 필드
   - 핵심필드로부터 계산해낼 수 있는 파생 필드 역시 굳이 비교할 필요는 없지만, 객체 전체의 상태를 대표하는 파생필드쪽을 비교하는게 더 빠를때도있다.
+
+<br/>
+
+- TIP
+  - AutoValue 프레임워크 사용하면 어노테이션으로 eqauls와 hashCode를 자동으로 만들어준다.
