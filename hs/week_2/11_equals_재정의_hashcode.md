@@ -34,7 +34,7 @@
         - 배열에 핵심 원소가 없다면 상수(보통 0) 사용한다.
         - 모든 원소가 핵심 원소라면 Arrays.hashCode 사용
     - 2-2) 계산한 해시코드 c로 result 갱신한다.
-      - result = 31 * result + c;
+      - ```result = 31 * result + c;```
         - 31로 정한 이유는 홀수이면서 소수이기 때문이다.
 3. result 반환
 
