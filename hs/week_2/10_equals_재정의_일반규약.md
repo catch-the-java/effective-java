@@ -28,7 +28,7 @@
 
 ### 2. 대칭성 (symmetry)
 - 조건
-  - x.eqals(y) true면 y.equals(x)도 true (null 아닌 모든 x,y)
+  - x.eqauls(y) true면 y.equals(x)도 true (null 아닌 모든 x,y)
   - 즉, 서로에 대한 동치가 같아야한다.
 
 #### 잘못된 코드
@@ -128,7 +128,7 @@ public class ColorPoint extends Point {
   - __구체 클래스를 확장해 새로운 값을 추가하면서 equals 규약을 만족시킬 방법은 존재하지 않는다.__
 #### __문제 코드 #3 (리스코프 치환 원칙 위배)__
   - 그렇다면 equals는 같은 구현 클래스의 객체와 비교할 때만 true 반환하게 변경하면?
-    - getClass 메서드 사용
+    - instanceof 메서드가 아닌 getClass 메서드 사용
   ```java
   // Point 클래스 일부
     @Override public boolean equals(Object o) {
@@ -201,10 +201,18 @@ public class ColorPoint extends Point {
 ## equals 올바른 구현 방법
 
 - __구현단계__
-  1. == 연산자를 사용해 입력이 자기 참조인지 확인한다.
-      - 자기 자신이면 true -> 성능최적화용도
-  2. instanceof 연산자로 입력이 올바른 타입인지 확인. 그렇지 않으면 false 반환.
-  3. 입력을 올바른 타입으로 형변환한다.
+
+```java
+@Override public boolean equals(Object o) {
+        if (o == this) // (1) == 연산자를 사용해 입력이 자기 참조인지 확인 => 자기 자신이면 true (성능최적화용도)
+            return true;
+        if (!(o instanceof PhoneNumber)) // (2) instanceof 연산자로 입력이 올바른 타입인지 확인. 그렇지 않으면 false 반환.
+            return false;
+        PhoneNumber pn = (PhoneNumber)o; // (3) 입력을 올바른 타입으로 형변환한다.
+        return pn.lineNum == lineNum && pn.prefix == prefix // (4) 아래 설명참조
+                && pn.areaCode == areaCode;
+    }
+```
   4. 입력 객체와 자기 자신의 대응되는 '핵심' 필드들이 모두 일치하는지 하나씩 검사한다.
       - 기본 타입 필드(float, double 제외)는 == 연산자로 비교
       - 참조 타입은 각각의 equals 메서드로 비교
@@ -217,6 +225,8 @@ public class ColorPoint extends Point {
 
 <br/>
 
+## 주의 사항
+
 - __어떤 필드를 먼저 비교하느냐가 equals의 성능을 좌우한다.__
   - 비교하는 비용이 싼 필드 먼저 비교
   - 객체의 논리적 상태와 관련 없는 필드는 비교하면 안된다.
@@ -227,3 +237,43 @@ public class ColorPoint extends Point {
 
 - TIP
   - AutoValue 프레임워크 사용하면 어노테이션으로 eqauls와 hashCode를 자동으로 만들어준다.
+
+<br/>
+
+## 용어 정리
+
+#### 표준형? canonical form?
+
+- 만약 equals할때마다 객체를 대문자로 바꾸고 연산하면 비용이드니깐, 미리 객체 만들때 '표준형'을 저장해두고 연산
+
+
+```java
+public final class CaseInsensitiveString {
+
+  private final String s;
+  private final String sForEquals; //equals를 단순화 하기 위한 필드
+
+  public CaseInsensitiveString(String s) {
+      if (s == null) {
+          throw new IllegalArgumentException(); //NullPointerException()
+      }
+      this.s = s;
+      this.sForEquals = s.toUpperCase(); //upper 또는 lower로 초기화
+  }
+
+  @Override
+  public boolean equals(Object o) {
+      return o instanceof CaseInsensitiveString &&
+          ((CaseInsensitiveString) o).sForEquals.equals(this.sForEquals);
+  }
+
+  @Override
+  public int hashCode(){
+      return sForEquals.hashCode();
+  }
+  // remainder omitted
+}
+```
+- 출처
+  - https://github.com/2021BookChallenge/Effective-Java/issues/7
+  - https://stackoverflow.com/questions/24427586/what-is-a-canonical-representation-of-a-field-meant-to-be-for-equals-method/24428722#24428722
