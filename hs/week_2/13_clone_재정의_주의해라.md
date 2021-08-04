@@ -154,7 +154,7 @@ public class Stack implements Cloneable {
 <br/>
 
 ## 복사 생성자와 복사 팩터리 (추천방법)
->  Clonealbe을 이미 구현한 클래스를 확장하는건 어쩔 수 없다.
+>  Cloneable을 이미 구현한 클래스를 확장하는건 어쩔 수 없다.
 
 - Cloneable/clone방식은 복잡하다.
 - __복사 생성자와 복사 팩터리__ 라는 더 나은 객체 복사 방식을 제공할 수 있다.
