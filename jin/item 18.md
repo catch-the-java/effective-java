@@ -55,7 +55,7 @@ System.out.println(s.getAddCount());
 
 ## 컴포지션?
 
-이 방법은 새로운 클래스를 만들어 private 필드로 기존 클래스의 인스턴스를 참조하도록 설계하는 방식이다. 이런 방식을 포워딩이라고 하고 새 클래스의 메서드들을 전달 메서드(forwarding method)라고 한다. 그 결과 새로운 메서드는 기존 클래스의 내부 구현 방식에서 벗어나며 위에서 생긴 문제들을 모두 해소 할 수있다. 위에서 봤던 InstrumentedHashSet함수를 다시 구현해보겠다.
+이 방법은 새로운 클래스를 만들어 private 필드로 기존 클래스의 인스턴스를 참조하도록 설계하는 방식이다. 이런 방식을 포워딩이라고 하고 새 클래스의 메서드들을 전달 메서드(forwarding method)라고 한다. 그 결과 새로운 메서드는 기존 클래스의 내부 구현 방식에서 벗어나며 위에서 생긴 문제들을 모두 해소 할 수있다. 위에서 봤던 InstrumentedHashSet함수를 다시 구현해보겠다. has-a is-a
 
 ```java
 public class InstrumentedSet<E> extends ForwardingSet<E> {
@@ -98,7 +98,7 @@ public class ForwardingSet<E> implements Set<E> {
 
 ```java
 Set<Instant> times = new InstrumentedSet<>(new TreeSet<>(cmp));
-Set<E>. s = new InstrumentedSet<>(new HashSet<>(INIT_CAPACITY));
+Set<E> s = new InstrumentedSet<>(new HashSet<>(INIT_CAPACITY));
 ```
 
 다른 Set 인스턴스를 감싸고(wrap) 있다는 뜻에서 InstrumentedSet 같은 클래스를 래퍼 클래스라 하며, 다른 Set에 계측 기능을 덧씌운다는. 뜻에서 데코레이터 패턴이라고 한다. 컴포지션과 전달의 조합은 럾은 의미로 위임이라고 부른다.(엄밀히 따지면 래퍼 객체가 내부 객체에 자기 자신의 참조를 넘기는 경우만 위임에 해당한다.)
@@ -118,7 +118,7 @@ public class Model{
     public void makeChange(){
         ... 
     }
-} 
+}
 
 public class Controller{
     private final Model model;
