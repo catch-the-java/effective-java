@@ -8,10 +8,11 @@
 
 # 아이템10. equals는 일반 규약을 지켜 재정의하라  
 
+> 논리적 동치성 비교 가능하고, Map의 키와 Set의 원소로 사용 가능. 등등
+
 ## equals 재정의 안해도 괜찮은 경우는?
   1. 각 인스턴스가 본질적으로 고유한 경우.
       - ex) enum(아이템 34), 값이 같은 인스턴스가 둘 이상 만들어지지 않음을 보장하는 인스턴스 통제 클래스(아이템1)
-        - 논리적 동치성 == 물리적인 객체 식별성 같은 의미가 됨
   2. 인스턴스의 '논리적 동치성(logical equality)'을 검사할 일이 없는 경우
   3. 상위 클래스에서 재정의한 equal가 하위 클래스에도 딱 들어 맞는 경우
   4. 클래스가 private이거나 package-private이고 equals 메서드를 호출할 일이 없는 경우
@@ -29,7 +30,7 @@
 ### 2. 대칭성 (symmetry)
 - 조건
   - x.eqauls(y) true면 y.equals(x)도 true (null 아닌 모든 x,y)
-  - 즉, 서로에 대한 동치가 같아야한다.
+  - 즉, 서로에 대한 동치가 같아야한다.  
 
 #### 잘못된 코드
 ```java
@@ -74,7 +75,8 @@ public boolean equals(Object o) {
 public class Point {
     private final int x;
     private final int y;
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
       // 구현 생략
     }
     // 나머지 코드 생략
@@ -85,7 +87,8 @@ public class Point {
 ```java
 public class ColorPoint extends Point {
     private final Color color;
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
       if (!(o instanceof ColorPoint))
           return false;
       return super.equals(o) && ((ColorPoint) o).color == color;
@@ -104,7 +107,8 @@ ColorPoint cp = new ColorPoint(1, 2, Color.RED);
 ```java
 public class ColorPoint extends Point {
     private final Color color;
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (!(o instanceof Point))
             return false;
 
@@ -125,7 +129,7 @@ public class ColorPoint extends Point {
   ```
   - 대칭성은 만족하지만 __추이성에 위배된다.__
     - p1.equals(p2), p2.equals(p3)는 true인데 p1.eqauls(p3)는 false
-  - __구체 클래스를 확장해 새로운 값을 추가하면서 equals 규약을 만족시킬 방법은 존재하지 않는다.__
+#### __즉, 구체 클래스를 확장해 새로운 값을 추가하면서 equals 규약을 만족시킬 방법은 존재하지 않는다.__
 #### __문제 코드 #3 (리스코프 치환 원칙 위배)__
   - 그렇다면 equals는 같은 구현 클래스의 객체와 비교할 때만 true 반환하게 변경하면?
     - instanceof 메서드가 아닌 getClass 메서드 사용
