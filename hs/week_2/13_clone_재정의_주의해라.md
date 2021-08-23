@@ -183,5 +183,4 @@ public class Stack implements Cloneable {
 <br/>
 
 ## 용어 정리
-
 - 비검사 예외? 검사 예외?
