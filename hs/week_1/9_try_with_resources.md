@@ -24,7 +24,7 @@ static void copy(String src, String dst) throws IOException {
         } finally {
             in.close();
         }
-    }
+    } sssss
 ```
 
 - 전통적으로 자원이 제대로 닫힘을 보장하는 수단으로 사용
