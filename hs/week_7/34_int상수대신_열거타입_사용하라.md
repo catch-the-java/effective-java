@@ -5,7 +5,7 @@
 
 <br/>
 
-## 정수 열거 패턴
+## 정수 열거 패턴
 ```java
 public static final int APPLE_FUJI = 0;
 public static final int APPLE_PIPPIN = 1;
