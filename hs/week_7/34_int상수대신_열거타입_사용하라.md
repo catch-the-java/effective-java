@@ -103,8 +103,10 @@ enum Planet {
 - 널리 쓰이는 열거타입은 톱레벨 클래스로, 특정 톱레벨 클래스에서만 쓰인다면 해당 클래스의 멤버 클래스로 만든다. (아이템24)
 
 <br/>
+
 ## 상수별 메소드 구현
 #### 개선 전
+
 ```java
 public enum Operation {
     PLUS,MINUS,TIMES,DIVDE;
@@ -127,7 +129,9 @@ public enum Operation {
 - 깨기 쉬운 코드다.
   - 새로운 상수를 추가하면 해당 case 문도 추가해야한다.
   - 깜빡하고 추가안하고 연산을 수행하려 하면 런타임 오류 발생
+
 #### 개선 후 (상수별 메소드 구현)
+
 ```java
 enum Operation {
     PLUS {
@@ -145,6 +149,7 @@ enum Operation {
 }
 ```
 - apply가 추상 메서드이므로 재정의하지 않으면 컴파일 오류
+
 #### 개선 후 (상수별 메소드 + 데이터 구현)
 
 ```java
@@ -214,6 +219,7 @@ public static Optional<Operation> fromString(String symbol) {
 #### 개선전 문제점
 - 상수별 메서드 구현에는 열거 타입 상수끼리 코드를 공유하기 어렵다는 단점이 있다. 다음예 참조.
   - 열거 타입 추가시 case문 추가를 잊어 오작동할 가능성 존재
+
 ```java
 public enum PayrollDay {
     MONDAY,
@@ -254,9 +260,11 @@ public enum PayrollDay {
   3. 평일 잔업수당 계산용 메서드만 구현해놓고, 주말 상수에서만 재정의
 
 #### 개선후 (전략 열거 타입 패턴)
+
 - 새로운 상수를 추가할 때 잔업수당 전략을 선택
 - 잔업수당 계산을 private 중첩열거타입(`PayType`)으로 옮기고
 - `PayrollDay`열거 타입의 생성자에서 이 중 적당한 것을 선택한다.
+
 ```java
 public enum PayrollDay {
     MONDAY(PayType.WEEKDAY),
@@ -301,7 +309,9 @@ public enum PayrollDay {
 }
 ```
 #### switch문이 좋을 경우는?
+
 1. 기존 열거 타입에 상수별 동작을 혼합해 넣을 때는 switch 문이 좋은 선택이 될 수 있다.
+
 ```java
 // 각 연산의 반대 연산을 반환
 public static Operation inverse(Operation operation) {
