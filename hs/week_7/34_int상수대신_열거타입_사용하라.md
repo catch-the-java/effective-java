@@ -5,12 +5,8 @@
 
 <br/>
 
-<<<<<<< HEAD
 ## 정수 열거 패턴
-=======
-## 정수 열거 패턴
 
->>>>>>> 608c726 (수정)
 ```java
 public static final int APPLE_FUJI = 0;
 public static final int APPLE_PIPPIN = 1;
