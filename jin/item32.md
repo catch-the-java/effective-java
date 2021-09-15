@@ -11,7 +11,7 @@
 참고로 가변인수는 메서드의 마지막에 선언해야한다.
 
 ```java
-String printAll(String s1...str) {
+String printAll(String s1... str) {
   for(String item : str) {
     System.out.println(item);
   }
