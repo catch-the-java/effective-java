@@ -15,3 +15,11 @@
     - 실패에 관한 많은 것을 알려주게 하라
         - 무엇을 고쳐야 할지 분석하는 데 큰 도움이 된다.
     - 보안에 문제가 있는 것은 보여주지 않도록 하자!
+    ```java
+    public IndexOutOfBoundsException(int lowerBound, int upperBound, int index) {
+        super(String.format("최솟값: %d, 최댓값 : %d, 인덱스 : %d", lowerBound, upperBound, index));
+        this.lowerBound = lowerBound;
+        this.uppderBound = upperBound;
+        this.index = index;
+    }
+    ```
