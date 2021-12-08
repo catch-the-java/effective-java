@@ -98,4 +98,8 @@ public final class StringList implements Serializable {
 
 WriteObject와 ReadObject가 직렬화 형태를 처리한다. (Transient 한정자는 직렬화를 하지 않음을 의미)
 
-...? 뭔 내용인지 이해를 못하겠음..
+## 버전 관리
+직렬버전 UID가 일으키는 잠재적인 호환성 문제를 사라지게 하기 위해서
+어떤 직렬화 형태를 택하든 직렬화 가능 클래스 모두에 직렬 버전 UID를 명 시적으로 부여하자
+
+호환 버전을 끊고 싶은 것이 아니면 UID는 수정하지 말자.
